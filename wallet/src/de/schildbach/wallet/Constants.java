@@ -90,22 +90,22 @@ public final class Constants
 	public static final String MIMETYPE_TRANSACTION = "application/x-btctx";
 
 	/** MIME type used for transmitting wallet backups. */
-	public static final String MIMETYPE_WALLET_BACKUP = "application/x-bitcoin-wallet-backup";
+	public static final String MIMETYPE_WALLET_BACKUP = "application/x-mintcoin-wallet-backup";
 
 	/** Number of confirmations until a transaction is fully confirmed. */
 	public static final int MAX_NUM_CONFIRMATIONS = 7;
 
 	/** User-agent to use for network access. */
-	public static final String USER_AGENT = "Bitcoin Wallet";
+	public static final String USER_AGENT = "Mintcoin Wallet";
 
 	/** Default currency to use if all default mechanisms fail. */
 	public static final String DEFAULT_EXCHANGE_CURRENCY = "USD";
 
 	/** Donation address for tip/donate action. */
-	public static final String DONATION_ADDRESS = "18CK5k1gajRKKSC7yVSTXT9LUzbheh1XY4";
+	public static final String DONATION_ADDRESS = "MgNKk73sP6q2XgT3beU7WV9SKppVGTGa2w";
 
 	/** Recipient e-mail address for reports. */
-	public static final String REPORT_EMAIL = "bitcoin.wallet.developers@gmail.com";
+	public static final String REPORT_EMAIL = "roboguy3@gmail.com";
 
 	/** Subject line for manually reported issues. */
 	public static final String REPORT_SUBJECT_ISSUE = "Reported issue";
@@ -125,8 +125,8 @@ public final class Constants
 
 	public static final MonetaryFormat LOCAL_FORMAT = new MonetaryFormat().noCode().minDecimals(2).optionalDecimals();
 
-	public static final String SOURCE_URL = "https://github.com/schildbach/bitcoin-wallet";
-	public static final String BINARY_URL = "https://github.com/schildbach/bitcoin-wallet/releases";
+	public static final String SOURCE_URL = "https://github.com/MintcoinCommunity/mintcoin-wallet";
+	public static final String BINARY_URL = "https://github.com/MintcoinCommunity/mintcoin-wallet/releases";
 	public static final String MARKET_APP_URL = "market://details?id=%s";
 	public static final String WEBMARKET_APP_URL = "https://play.google.com/store/apps/details?id=%s";
 

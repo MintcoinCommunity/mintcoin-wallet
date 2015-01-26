@@ -98,6 +98,7 @@ public class ExchangeRatesProvider extends ContentProvider
 	@CheckForNull
 	private Map<String, ExchangeRate> exchangeRates = null;
 	private long lastUpdated = 0;
+    private static double mintBtcConversion = -1;
 
 	private static final URL BITCOINAVERAGE_URL;
 	private static final String[] BITCOINAVERAGE_FIELDS = new String[] { "24h_avg", "last" };
@@ -105,6 +106,7 @@ public class ExchangeRatesProvider extends ContentProvider
 	private static final URL BLOCKCHAININFO_URL;
 	private static final String[] BLOCKCHAININFO_FIELDS = new String[] { "15m" };
 	private static final String BLOCKCHAININFO_SOURCE = "blockchain.info";
+    private static final URL CRYPTSY_URL;
 
 	// https://bitmarket.eu/api/ticker
 
@@ -114,6 +116,7 @@ public class ExchangeRatesProvider extends ContentProvider
 		{
 			BITCOINAVERAGE_URL = new URL("https://api.bitcoinaverage.com/custom/abw");
 			BLOCKCHAININFO_URL = new URL("https://blockchain.info/ticker");
+            CRYPTSY_URL = new URL("http://pubapi.cryptsy.com/api.php?method=singlemarketdata&marketid=156");
 		}
 		catch (final MalformedURLException x)
 		{
@@ -161,6 +164,16 @@ public class ExchangeRatesProvider extends ContentProvider
 
 		if (!offline && (lastUpdated == 0 || now - lastUpdated > UPDATE_FREQ_MS))
 		{
+            float newMintBtcConversion = -1;
+            if ((mintBtcConversion == -1 && newMintBtcConversion == -1))
+                newMintBtcConversion = requestMintBtcConversion();
+
+            if (newMintBtcConversion != -1)
+                mintBtcConversion = newMintBtcConversion;
+
+            if (mintBtcConversion == -1)
+                return null;
+
 			Map<String, ExchangeRate> newExchangeRates = null;
 			if (newExchangeRates == null)
 				newExchangeRates = requestExchangeRates(BITCOINAVERAGE_URL, userAgent, BITCOINAVERAGE_SOURCE, BITCOINAVERAGE_FIELDS);
@@ -189,6 +202,8 @@ public class ExchangeRatesProvider extends ContentProvider
 			{
 				final ExchangeRate exchangeRate = entry.getValue();
 				final org.bitcoinj.utils.ExchangeRate rate = exchangeRate.rate;
+				if(mintBtcConversion > 0)
+					rate.coin.multiply((long) (1/mintBtcConversion));
 				final String currencyCode = exchangeRate.getCurrencyCode();
 				cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value).add(exchangeRate.source);
 			}
@@ -200,6 +215,8 @@ public class ExchangeRatesProvider extends ContentProvider
 			{
 				final ExchangeRate exchangeRate = entry.getValue();
 				final org.bitcoinj.utils.ExchangeRate rate = exchangeRate.rate;
+				if(mintBtcConversion > 0)
+					rate.coin.multiply((long) (1/mintBtcConversion));
 				final String currencyCode = exchangeRate.getCurrencyCode();
 				final String currencySymbol = GenericUtils.currencySymbol(currencyCode);
 				if (currencyCode.toLowerCase(Locale.US).contains(selectionArg) || currencySymbol.toLowerCase(Locale.US).contains(selectionArg))
@@ -213,6 +230,8 @@ public class ExchangeRatesProvider extends ContentProvider
 			if (exchangeRate != null)
 			{
 				final org.bitcoinj.utils.ExchangeRate rate = exchangeRate.rate;
+				if(mintBtcConversion > 0)
+					rate.coin.multiply((long) (1/mintBtcConversion));
 				final String currencyCode = exchangeRate.getCurrencyCode();
 				cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value).add(exchangeRate.source);
 			}
@@ -331,8 +350,9 @@ public class ExchangeRatesProvider extends ContentProvider
 							{
 								try
 								{
+									//BigDecimal btcRate = new BigDecimal(GenericUtils.toNanoCoins(rate, 0));
+                                	//BigInteger mintRate = btcRate.multiply(BigDecimal.valueOf(mintBtcConversion)).toBigInteger();
 									final Fiat rate = Fiat.parseFiat(currencyCode, rateStr);
-
 									if (rate.signum() > 0)
 									{
 										rates.put(currencyCode, new ExchangeRate(new org.bitcoinj.utils.ExchangeRate(rate), source));
@@ -382,4 +402,69 @@ public class ExchangeRatesProvider extends ContentProvider
 
 		return null;
 	}
+
+    private static float requestMintBtcConversion() {
+        HttpURLConnection connection = null;
+        Reader reader = null;
+        URL providerUrl = CRYPTSY_URL;
+
+        try
+        {
+            connection = (HttpURLConnection) providerUrl.openConnection();
+            connection.setConnectTimeout(Constants.HTTP_TIMEOUT_MS);
+            connection.setReadTimeout(Constants.HTTP_TIMEOUT_MS);
+            connection.connect();
+
+            final int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK)
+            {
+                reader = new InputStreamReader(new BufferedInputStream(connection.getInputStream(), 1024), Charsets.UTF_8);
+                final StringBuilder content = new StringBuilder();
+                Io.copy(reader, content);
+
+                try
+                {
+                    JSONObject json = new JSONObject(content.toString());
+                    float rate = Float.parseFloat(
+                                json.getJSONObject("return")
+                                    .getJSONObject("markets")
+                                    .getJSONObject("MINT")
+                                    .getString("lasttradeprice"));
+                    return rate;
+                } catch (NumberFormatException e)
+                {
+                    log.debug("Couldn't get the current exchnage rate from cryptsy ");
+                    return -1;
+                }
+
+            }
+            else
+            {
+                log.debug("http status " + responseCode + " when fetching " + providerUrl);
+            }
+        }
+        catch (final Exception x)
+        {
+            log.debug("problem reading exchange rates", x);
+        }
+        finally
+        {
+            if (reader != null)
+            {
+                try
+                {
+                    reader.close();
+                }
+                catch (final IOException x)
+                {
+                    // swallow
+                }
+            }
+
+            if (connection != null)
+                connection.disconnect();
+        }
+
+        return -1;
+    }
 }
