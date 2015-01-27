@@ -164,15 +164,9 @@ public class ExchangeRatesProvider extends ContentProvider
 
 		if (!offline && (lastUpdated == 0 || now - lastUpdated > UPDATE_FREQ_MS))
 		{
-            float newMintBtcConversion = -1;
-            if ((mintBtcConversion == -1 && newMintBtcConversion == -1))
-                newMintBtcConversion = requestMintBtcConversion();
-
-            if (newMintBtcConversion != -1)
-                mintBtcConversion = newMintBtcConversion;
-
-            if (mintBtcConversion == -1)
-                return null;
+            double newMintBtcConversion = requestMintBtcConversion();
+            if (newMintBtcConversion != -1) mintBtcConversion = newMintBtcConversion;
+            if (mintBtcConversion <= 0) return null;
 
 			Map<String, ExchangeRate> newExchangeRates = null;
 			if (newExchangeRates == null)
@@ -195,17 +189,15 @@ public class ExchangeRatesProvider extends ContentProvider
 			return null;
 
 		final MatrixCursor cursor = new MatrixCursor(new String[] { BaseColumns._ID, KEY_CURRENCY_CODE, KEY_RATE_COIN, KEY_RATE_FIAT, KEY_SOURCE });
-
+		
 		if (selection == null)
 		{
 			for (final Map.Entry<String, ExchangeRate> entry : exchangeRates.entrySet())
 			{
 				final ExchangeRate exchangeRate = entry.getValue();
 				final org.bitcoinj.utils.ExchangeRate rate = exchangeRate.rate;
-				if(mintBtcConversion > 0)
-					rate.coin.multiply((long) (1/mintBtcConversion));
 				final String currencyCode = exchangeRate.getCurrencyCode();
-				cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value).add(exchangeRate.source);
+				cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value*mintBtcConversion).add(exchangeRate.source);
 			}
 		}
 		else if (selection.equals(QUERY_PARAM_Q))
@@ -215,12 +207,10 @@ public class ExchangeRatesProvider extends ContentProvider
 			{
 				final ExchangeRate exchangeRate = entry.getValue();
 				final org.bitcoinj.utils.ExchangeRate rate = exchangeRate.rate;
-				if(mintBtcConversion > 0)
-					rate.coin.multiply((long) (1/mintBtcConversion));
 				final String currencyCode = exchangeRate.getCurrencyCode();
 				final String currencySymbol = GenericUtils.currencySymbol(currencyCode);
 				if (currencyCode.toLowerCase(Locale.US).contains(selectionArg) || currencySymbol.toLowerCase(Locale.US).contains(selectionArg))
-					cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value).add(exchangeRate.source);
+					cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value*mintBtcConversion).add(exchangeRate.source);
 			}
 		}
 		else if (selection.equals(KEY_CURRENCY_CODE))
@@ -230,10 +220,8 @@ public class ExchangeRatesProvider extends ContentProvider
 			if (exchangeRate != null)
 			{
 				final org.bitcoinj.utils.ExchangeRate rate = exchangeRate.rate;
-				if(mintBtcConversion > 0)
-					rate.coin.multiply((long) (1/mintBtcConversion));
 				final String currencyCode = exchangeRate.getCurrencyCode();
-				cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value).add(exchangeRate.source);
+				cursor.newRow().add(currencyCode.hashCode()).add(currencyCode).add(rate.coin.value).add(rate.fiat.value*mintBtcConversion).add(exchangeRate.source);
 			}
 		}
 

@@ -71,14 +71,14 @@ public final class Constants
 	/** Maximum size of backups. Files larger will be rejected. */
 	public static final long BACKUP_MAX_CHARS = 10000000;
 
-	private static final String EXPLORE_BASE_URL_PROD = "https://www.biteasy.com/";
-	private static final String EXPLORE_BASE_URL_TEST = "https://www.biteasy.com/testnet/";
+	private static final String EXPLORE_BASE_URL_PROD = "http://explorer.mintcoinofficial.com/";
+	private static final String EXPLORE_BASE_URL_TEST = "http://explorer.mintcoinofficial.com/testnet/";
 	/** Base URL for browsing transactions, blocks or addresses. */
 	public static final String EXPLORE_BASE_URL = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? EXPLORE_BASE_URL_PROD
 			: EXPLORE_BASE_URL_TEST;
 
-	private static final String BITEASY_API_URL_PROD = "https://api.biteasy.com/blockchain/v1/";
-	private static final String BITEASY_API_URL_TEST = "https://api.biteasy.com/testnet/v1/";
+	private static final String BITEASY_API_URL_PROD = "http://explorer.mintcoinofficial.com/";
+	private static final String BITEASY_API_URL_TEST = "http://explorer.mintcoinofficial.com/testnet/";
 	/** Base URL for blockchain API. */
 	public static final String BITEASY_API_URL = NETWORK_PARAMETERS.getId().equals(NetworkParameters.ID_MAINNET) ? BITEASY_API_URL_PROD
 			: BITEASY_API_URL_TEST;
