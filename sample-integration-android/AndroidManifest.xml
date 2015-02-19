@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="de.schildbach.wallet.integration.sample"
+	package="mintcoin.wallet.integration.sample"
 	android:versionCode="1"
 	android:versionName="1.0" >
 
@@ -18,7 +18,7 @@
 
 	<application android:label="Bitcoin in-app payment sample" >
 		<activity
-			android:name="de.schildbach.wallet.integration.sample.SampleActivity"
+			android:name="mintcoin.wallet.integration.sample.SampleActivity"
 			android:theme="@android:style/Theme.Light" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

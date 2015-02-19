@@ -4,11 +4,11 @@
 	<string name="help_wallet">
 <![CDATA[
 		<p>
-			La supra maldekstra parto de la ekrano montras vian elektitan Bitmonadreson, ke aliaj homoj bezonas scii por sendi al vi Bitmonojn.
+			La supra maldekstra parto de la ekrano montras vian elektitan Mintmonadreson, ke aliaj homoj bezonas scii por sendi al vi Bitmonojn.
 			Frapetu por ŝanĝi la adreson.
 		</p>
 		<p>
-			La QR kodo dekstre enhavas vian bitmonadreson kaj povas esti uzata por skanado de alia partio.
+			La QR kodo dekstre enhavas vian Mintmonadreson kaj povas esti uzata por skanado de alia partio.
 			Frapetu sur la QR kodo por obteni pli grandan version.
 		</p>
 		<p>
@@ -51,12 +51,12 @@
 <![CDATA[
 		<p>
 			Vi komencis la procezon de sendado de mono.
-			Vi venis ĉi tien tra la ĉefa ekrano aŭ klakante sur Bitmona URL en via poŝtelefonretumilo.
+			Vi venis ĉi tien tra la ĉefa ekrano aŭ klakante sur Mintmona URL en via poŝtelefonretumilo.
 		</p>
 		<p>
-			Unue, vi enigi la Bitmonadreson por pagi al.
+			Unue, vi enigi la Mintmonadreson por pagi al.
 			La adreso aŭtomate kompletigos el konataj enigoj en via adreslibro.
-			Vi povas ankaŭ skani QR-kodojn kun Bitmonadresoj aŭ Bitmonaj petoj per klaki la QR-butonon en la agujo.
+			Vi povas ankaŭ skani QR-kodojn kun Mintmonadresoj aŭ Mintmonaj petoj per klaki la QR-butonon en la agujo.
 		</p>
 		<p>
 			Tuj poste, vi povas vidi kiom da Bitmonoj vi povas elspezi nune.

@@ -6,11 +6,11 @@
 
 	<artifactId>mintcoin-wallet</artifactId>
 	<packaging>apk</packaging>
-	<version>1.00</version>
+	<version>1.04</version>
 	<name>Mintcoin Wallet</name>
 
 	<parent>
-		<groupId>com.mintcoin.wallet</groupId>
+		<groupId>mintcoin.wallet</groupId>
 		<artifactId>base</artifactId>
 		<version>1</version>
 	</parent>
@@ -64,14 +64,14 @@
 
 		<!-- com.google.bitcoin.* -->
 		<dependency>
-			<groupId>org.bitcoinj</groupId>
-			<artifactId>bitcoinj-core</artifactId>
+			<groupId>org.mintcoinj</groupId>
+			<artifactId>mintcoinj-core</artifactId>
 			<version>0.12.2</version>
 		</dependency>
 
-		<!-- de.schildbach.wallet.integration.android.* -->
+		<!-- mintcoin.wallet.integration.android.* -->
 		<dependency>
-			<groupId>de.schildbach.wallet</groupId>
+			<groupId>mintcoin.wallet</groupId>
 			<artifactId>integration-android</artifactId>
 			<version>2.0</version>
 		</dependency>
@@ -301,7 +301,7 @@
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>2.5.2</version>
 				<configuration>
-					<onlyAnalyze>de.schildbach.wallet.-</onlyAnalyze>
+					<onlyAnalyze>mintcoin.wallet.-</onlyAnalyze>
 				</configuration>
 			</plugin>
 		</plugins>

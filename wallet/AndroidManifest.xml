@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
-	package="de.schildbach.wallet"
+	package="mintcoin.wallet"
 	android:installLocation="internalOnly"
 	android:versionCode="206"
-	android:versionName="4.16" >
+	android:versionName="1.04" >
 
 	<uses-sdk
 		android:minSdkVersion="15"
@@ -54,19 +54,19 @@
 		android:xlargeScreens="true" />
 
 	<application
-		android:name="de.schildbach.wallet.WalletApplication"
+		android:name="mintcoin.wallet.WalletApplication"
 		android:allowBackup="false"
 		android:icon="@drawable/app_icon"
 		android:label="@string/app_name"
 		android:theme="@style/My.Theme" >
 		<activity
-			android:name="de.schildbach.wallet.ui.WalletActivity"
+			android:name="mintcoin.wallet.ui.WalletActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:launchMode="singleTask" />
 
 		<activity-alias
-			android:name="de.schildbach.wallet.WalletActivity"
-			android:targetActivity="de.schildbach.wallet.ui.WalletActivity" >
+			android:name="mintcoin.wallet.WalletActivity"
+			android:targetActivity="mintcoin.wallet.ui.WalletActivity" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 
@@ -82,7 +82,7 @@
 		</activity-alias>
 
 		<activity
-			android:name="de.schildbach.wallet.ui.send.SendCoinsActivity"
+			android:name="mintcoin.wallet.ui.send.SendCoinsActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/send_coins_activity_title"
 			android:screenOrientation="behind"
@@ -118,37 +118,37 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="de.schildbach.wallet.ui.SendCoinsQrActivity"
+			android:name="mintcoin.wallet.ui.SendCoinsQrActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar" >
 		</activity>
 		<activity
-			android:name="de.schildbach.wallet.ui.RequestCoinsActivity"
+			android:name="mintcoin.wallet.ui.RequestCoinsActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/request_coins_activity_title"
 			android:screenOrientation="behind"
 			android:windowSoftInputMode="adjustResize" />
 		<activity
-			android:name="de.schildbach.wallet.ui.AddressBookActivity"
+			android:name="mintcoin.wallet.ui.AddressBookActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/address_book_activity_title"
 			android:screenOrientation="behind" />
 		<activity
-			android:name="de.schildbach.wallet.ui.ExchangeRatesActivity"
+			android:name="mintcoin.wallet.ui.ExchangeRatesActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/exchange_rates_activity_title"
 			android:screenOrientation="behind" />
 		<activity
-			android:name="de.schildbach.wallet.ui.NetworkMonitorActivity"
+			android:name="mintcoin.wallet.ui.NetworkMonitorActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/network_monitor_activity_title"
 			android:screenOrientation="behind" />
 		<activity
-			android:name="de.schildbach.wallet.ui.preference.PreferenceActivity"
+			android:name="mintcoin.wallet.ui.preference.PreferenceActivity"
 			android:label="@string/preferences_activity_title"
 			android:screenOrientation="behind" />
 		<activity
-			android:name="de.schildbach.wallet.ui.RestoreWalletActivity"
+			android:name="mintcoin.wallet.ui.RestoreWalletActivity"
 			android:configChanges="orientation|keyboard|keyboardHidden"
 			android:theme="@style/My.Theme.Dialog" >
 			<intent-filter android:label="@string/import_keys_intent_filter_action" >
@@ -161,35 +161,35 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="de.schildbach.wallet.ui.ScanActivity"
+			android:name="mintcoin.wallet.ui.ScanActivity"
 			android:configChanges="orientation|keyboard|keyboardHidden"
 			android:screenOrientation="landscape"
 			android:stateNotNeeded="true"
 			android:theme="@style/My.Theme.Fullscreen"
 			android:windowSoftInputMode="stateAlwaysHidden" />
 		<activity
-			android:name="de.schildbach.wallet.ui.send.SweepWalletActivity"
+			android:name="mintcoin.wallet.ui.send.SweepWalletActivity"
 			android:configChanges="keyboard|keyboardHidden"
 			android:label="@string/sweep_wallet_activity_title"
 			android:screenOrientation="behind"
 			android:windowSoftInputMode="adjustResize" />
 
 		<provider
-			android:name="de.schildbach.wallet.AddressBookProvider"
-			android:authorities="de.schildbach.wallet.address_book"
+			android:name="mintcoin.wallet.AddressBookProvider"
+			android:authorities="mintcoin.wallet.address_book"
 			android:exported="false" />
 		<provider
-			android:name="de.schildbach.wallet.ExchangeRatesProvider"
-			android:authorities="de.schildbach.wallet.exchange_rates"
+			android:name="mintcoin.wallet.ExchangeRatesProvider"
+			android:authorities="mintcoin.wallet.exchange_rates"
 			android:exported="false" />
 		<provider
-			android:name="de.schildbach.wallet.FileAttachmentProvider"
-			android:authorities="de.schildbach.wallet.file_attachment"
+			android:name="mintcoin.wallet.FileAttachmentProvider"
+			android:authorities="mintcoin.wallet.file_attachment"
 			android:exported="false"
 			android:grantUriPermissions="true" />
 
 		<receiver
-			android:name="de.schildbach.wallet.WalletBalanceWidgetProvider"
+			android:name="mintcoin.wallet.WalletBalanceWidgetProvider"
 			android:label="Mintcoin Wallet Balance" >
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -201,13 +201,13 @@
 		</receiver>
 
 		<service
-			android:name="de.schildbach.wallet.service.BlockchainServiceImpl"
+			android:name="mintcoin.wallet.service.BlockchainServiceImpl"
 			android:exported="false" />
 		<service
-			android:name="de.schildbach.wallet.offline.AcceptBluetoothService"
+			android:name="mintcoin.wallet.offline.AcceptBluetoothService"
 			android:exported="false" />
 
-		<receiver android:name="de.schildbach.wallet.service.AutosyncReceiver" >
+		<receiver android:name="mintcoin.wallet.service.AutosyncReceiver" >
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
@@ -217,7 +217,7 @@
 		</receiver>
 
 		<service
-			android:name="de.schildbach.wallet.service.UpgradeWalletService"
+			android:name="mintcoin.wallet.service.UpgradeWalletService"
 			android:exported="false" />
 
 		<meta-data
